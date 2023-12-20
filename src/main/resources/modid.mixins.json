@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "college.andrei.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "DeathMessageMixin",
+    "MinecraftServerAccessor",
+    "MinecraftServerMixin",
+    "PlayerAdvancementTrackerMixin",
+    "PlayerManagerMixin",
+    "ServerPlayNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
