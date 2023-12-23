@@ -36,7 +36,7 @@ public abstract class DeathMessageMixin {
         List<NameValuePair> postParams = new ArrayList<>();
         postParams.add(new BasicNameValuePair("killer", killer.getUuidAsString()));
         postParams.add(new BasicNameValuePair("killed", killed.getUuidAsString()));
-        postParams.add(new BasicNameValuePair("deathByPlayer", "" + killer.isPlayer()));
+        postParams.add(new BasicNameValuePair("isByPlayer", "" + killer.isPlayer()));
         postParams.add(new BasicNameValuePair("msg", killed.getDamageTracker().getDeathMessage().getString()));
 
         Bot.sendPostInteraction(postParams, HTTPEndpoints.DEATH_BY_ENTITY);
