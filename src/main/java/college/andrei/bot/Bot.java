@@ -46,7 +46,7 @@ public class Bot {
             }
 
             // If not a 2xx code
-            if (resCode / 100 != 2) {
+            if (resCode < 200 || resCode > 299) {
                 botRunning = false;
                 throw new Exception("Server responded with error code " + resCode + ". Stopping HTTP Client");
             }
