@@ -1,18 +1,16 @@
 package college.andrei.mixin;
 
-import college.andrei.bot.Bot;
-import college.andrei.bot.HTTPEndpoints;
-import net.minecraft.advancement.*;
+import college.andrei.bot.CustomWebSocket;
+import college.andrei.mixinHelpers.dto.CustomAdvancement;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.text.Text;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mixin(PlayerAdvancementTracker.class)
 public abstract class PlayerAdvancementTrackerMixin {
@@ -30,25 +28,18 @@ public abstract class PlayerAdvancementTrackerMixin {
 
         boolean isDone = advancementProgress.isDone();
         Text progressText = advancementProgress.getProgressBarFraction();
+        String uuid = ((PlayerAdvancementTrackerAccessor) playerAdvancementTracker).getOwner().getUuidAsString();
 
         String name = Advancement.getNameFromIdentity(advancement).getString();
 
         // If mission is progressible
         if (progressText != null) {
             // If advancement is not even started (or revoked)
-            if (advancementProgress.getProgressBarPercentage() == 0.0) {
+            if (advancementProgress.getProgressBarPercentage() == 0.0f) {
                 return;
             }
 
-            List<NameValuePair> postParams = new ArrayList<>();
-
-            String progress = progressText.getString();
-
-            postParams.add(new BasicNameValuePair("name", name));
-            postParams.add(new BasicNameValuePair("isDone", "" + isDone));
-            postParams.add(new BasicNameValuePair("progress", progress));
-
-            Bot.sendPostInteraction(postParams, HTTPEndpoints.ADVANCEMENT_PROGRESSIBLE);
+            CustomWebSocket.sendData(new CustomAdvancement.Progressible(name, isDone, progressText.getString(), uuid).toJsonable());
         }
         // If mission is non-progressible (also referred to as boolean)
         else {
@@ -57,11 +48,7 @@ public abstract class PlayerAdvancementTrackerMixin {
                 return;
             }
 
-            List<NameValuePair> postParams = new ArrayList<>();
-
-            postParams.add(new BasicNameValuePair("name", name));
-
-            Bot.sendPostInteraction(postParams, HTTPEndpoints.ADVANCEMENT_BOOLEAN);
+            CustomWebSocket.sendData(new CustomAdvancement.Boolean(name, uuid).toJsonable());
         }
     }
 }

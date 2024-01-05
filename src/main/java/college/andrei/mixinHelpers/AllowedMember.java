@@ -1,40 +1,28 @@
 package college.andrei.mixinHelpers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class AllowedMember {
-    private String name;
-    private List<IP> allowedIps;
+    private String uuid;
+    private String[] allowedIps;
 
-    public AllowedMember(String name, List<IP> allowedIps) {
-        this.name = name;
+    public AllowedMember(String uuid, String[] allowedIps) {
+        this.uuid = uuid;
         this.allowedIps = allowedIps;
     }
 
-    public String getName() {
-        return name;
+    public String getUuid() {
+        return uuid;
     }
 
-    public List<IP> getAllowedIps() {
+    public String[] getAllowedIps() {
         return allowedIps;
     }
 
-    public static class JSON {
-        private String name;
-        private String[] allowedIps;
-
-        public String getName() {
-            return name;
-        }
-
-        public String[] getAllowedIps() {
-            return allowedIps;
-        }
-
-        @Override
-        public String toString() {
-            return "{name: " + name + ", allowedIps: " + Arrays.toString(allowedIps) + "}";
-        }
+    @Override
+    public String toString() {
+        return "{name: " + uuid + ", allowedIps: " + Arrays.toString(this.allowedIps) + "}";
     }
 }

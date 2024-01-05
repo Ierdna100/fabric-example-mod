@@ -53,6 +53,10 @@ dependencies {
 	shadow 'com.google.code.gson:gson:2.7'
 	implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 	shadow 'org.apache.httpcomponents:httpclient:4.5.14'
+	implementation 'org.glassfish.tyrus:tyrus-client:2.1.4'
+	shadow 'org.glassfish.tyrus:tyrus-client:2.1.4'
+	implementation 'org.glassfish.tyrus:tyrus-container-grizzly-client:2.1.4'
+	shadow 'org.glassfish.tyrus:tyrus-container-grizzly-client:2.1.4'
 }
 
 shadowJar {

@@ -1,17 +1,17 @@
 package college.andrei.mixin;
 
-import college.andrei.bot.Bot;
-import college.andrei.bot.HTTPEndpoints;
+import college.andrei.bot.CustomWebSocket;
+import college.andrei.mixinHelpers.dto.Deaths;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.net.http.WebSocket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,21 +24,17 @@ public abstract class DeathMessageMixin {
 
         Entity killer = damageSource.getAttacker();
 
-        if (killer == null) {
-            List<NameValuePair> postParams = new ArrayList<>();
-            postParams.add(new BasicNameValuePair("killed", killed.getUuidAsString()));
-            postParams.add(new BasicNameValuePair("msg", killed.getDamageTracker().getDeathMessage().getString()));
+        String paramKilled = killed.getUuidAsString();
+        String msg = killed.getDamageTracker().getDeathMessage().getString();
 
-            Bot.sendPostInteraction(postParams, HTTPEndpoints.DEATH);
+        if (killer == null) {
+            CustomWebSocket.sendData(new Deaths.Death(paramKilled, msg).toJsonable());
             return;
         }
 
-        List<NameValuePair> postParams = new ArrayList<>();
-        postParams.add(new BasicNameValuePair("killer", killer.getUuidAsString()));
-        postParams.add(new BasicNameValuePair("killed", killed.getUuidAsString()));
-        postParams.add(new BasicNameValuePair("isByPlayer", "" + killer.isPlayer()));
-        postParams.add(new BasicNameValuePair("msg", killed.getDamageTracker().getDeathMessage().getString()));
+        String paramKiller = killer.getUuidAsString();
+        boolean isByPlayer = killer.isPlayer();
 
-        Bot.sendPostInteraction(postParams, HTTPEndpoints.DEATH_BY_ENTITY);
+        CustomWebSocket.sendData(new Deaths.DeathByEntity(paramKiller, paramKilled, isByPlayer, msg).toJsonable());
     }
 }

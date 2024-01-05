@@ -6,6 +6,7 @@
     "DeathMessageMixin",
     "MinecraftServerAccessor",
     "MinecraftServerMixin",
+    "PlayerAdvancementTrackerAccessor",
     "PlayerAdvancementTrackerMixin",
     "PlayerManagerMixin",
     "ServerPlayNetworkHandlerMixin"

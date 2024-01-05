@@ -1,15 +1,16 @@
 package college.andrei.eventHandlers;
 
-import college.andrei.bot.Bot;
-import college.andrei.bot.HTTPEndpoints;
+import college.andrei.bot.CustomWebSocket;
+import college.andrei.bot.WSOpcodes;
+import college.andrei.bot.WebSocketData;
 import net.minecraft.server.MinecraftServer;
 
 public class ServerStoppingHandler {
     public static void onServerStopping(MinecraftServer server) {
-        Bot.sendPostInteraction(HTTPEndpoints.SERVER_STOP_WARNING);
+        CustomWebSocket.sendData(new WebSocketData<>(WSOpcodes.SERVER_STOP_WARNING.getOpcode(), null));
     }
 
     public static void onServerStop(MinecraftServer server) {
-        Bot.sendPostInteraction(HTTPEndpoints.SERVER_STOPPED);
+        CustomWebSocket.sendData(new WebSocketData<>(WSOpcodes.SERVER_STOPPED.getOpcode(), null));
     }
 }

@@ -1,7 +1,8 @@
 package college.andrei.eventHandlers;
 
-import college.andrei.bot.Bot;
-import college.andrei.bot.HTTPEndpoints;
+import college.andrei.bot.CustomWebSocket;
+import college.andrei.bot.WSOpcodes;
+import college.andrei.bot.WebSocketData;
 import net.minecraft.network.message.MessageType.Parameters;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -13,11 +14,20 @@ import java.util.List;
 
 public class ChatMessageHandler {
     public static void onChatMessage(SignedMessage message, ServerPlayerEntity sender, Parameters params) {
-        List<NameValuePair> postParams = new ArrayList<>();
-        postParams.add(new BasicNameValuePair("timestamp", message.getTimestamp().toString()));
-        postParams.add(new BasicNameValuePair("message", message.getContent().getString()));
-        postParams.add(new BasicNameValuePair("sender", message.getSender().toString()));
+        CustomWebSocket.sendData(new ChatMessage(message.getContent().getString(), message.getSender().toString()).toJsonable());
+    }
 
-        Bot.sendPostInteraction(postParams, HTTPEndpoints.MESSAGE);
+    public static class ChatMessage {
+        private final String message;
+        private final String sender;
+
+        public ChatMessage(String message, String sender) {
+            this.message = message;
+            this.sender = sender;
+        }
+
+        public WebSocketData<ChatMessage> toJsonable() {
+            return new WebSocketData<>(WSOpcodes.MESSAGE.getOpcode(), this);
+        }
     }
 }

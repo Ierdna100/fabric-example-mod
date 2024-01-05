@@ -1,8 +1,8 @@
 package college.andrei.mixin;
 
 import college.andrei.CollegeMod;
-import college.andrei.bot.Bot;
-import college.andrei.bot.HTTPEndpoints;
+import college.andrei.bot.CustomWebSocket;
+import college.andrei.mixinHelpers.dto.TickData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.Util;
@@ -20,15 +20,11 @@ import java.util.List;
 public class MinecraftServerMixin {
     @Inject(method = "runServer", at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"))
     private void onServerOverloaded(CallbackInfo ci) {
-        long tickStartTimeNanos = ((MinecraftServerAccessor) CollegeMod.server).getTickStartTimeNanos();
+        long tickStartTimeNanos = ((MinecraftServerAccessor) CollegeMod.server).getTimeReference();
 
-        long millisecondsBehind = (Util.getMeasuringTimeNano() - tickStartTimeNanos) / TimeHelper.MILLI_IN_NANOS;
-        long ticksBehind = millisecondsBehind / CollegeMod.server.getTickManager().getNanosPerTick();
+        long msBehind = Util.getMeasuringTimeMs() - tickStartTimeNanos;
+        long ticksBehind = msBehind / 50L;
 
-        List<NameValuePair> postParams = new ArrayList<>();
-        postParams.add(new BasicNameValuePair("ms", "" + millisecondsBehind));
-        postParams.add(new BasicNameValuePair("ticks", "" + ticksBehind));
-
-        Bot.sendPostInteraction(postParams, HTTPEndpoints.SERVER_OVERLOADED);
+        CustomWebSocket.sendData(new TickData(msBehind, ticksBehind).toJsonable());
     }
 }

@@ -1,7 +1,7 @@
 package college.andrei.mixin;
 
-import college.andrei.bot.Bot;
-import college.andrei.bot.HTTPEndpoints;
+import college.andrei.bot.CustomWebSocket;
+import college.andrei.mixinHelpers.dto.PlayerConnectingData;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.text.Text;
 import org.apache.http.NameValuePair;
@@ -20,10 +20,9 @@ public class ServerPlayNetworkHandlerMixin {
     private void onPlayerDisconnected(Text reason, CallbackInfo ci) {
         ServerPlayNetworkHandler playNetworkHandler = (ServerPlayNetworkHandler) (Object) this;
 
-        List<NameValuePair> postParams = new ArrayList<>();
-        postParams.add(new BasicNameValuePair("player", playNetworkHandler.player.getUuidAsString()));
-        postParams.add(new BasicNameValuePair("reason", reason.getString()));
-
-        Bot.sendPostInteraction(postParams, HTTPEndpoints.PLAYER_LEFT);
+        CustomWebSocket.sendData(new PlayerConnectingData.Disconnect(
+                playNetworkHandler.player.getUuidAsString(),
+                reason.getString())
+                .toJsonable());
     }
 }
