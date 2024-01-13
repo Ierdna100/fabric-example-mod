@@ -73,7 +73,7 @@ public class PlayerManagerMixin {
                         profile.getName(),
                         ip)
                         .toJsonable(WSOpcodes.PLAYER_FAILED_LOGIN_NO_IP));
-                cir.setReturnValue(Text.literal("IP did not match any existing IPs previously used. Confirm new IP via the Discord DM sent to you."));
+                cir.setReturnValue(Text.literal("IP did not match any existing IPs previously used.\nConfirm new IP via the Discord DM sent to you."));
                 cir.cancel();
                 return;
             }
@@ -91,8 +91,8 @@ public class PlayerManagerMixin {
                     profile.getName(),
                     ip)
                     .toJsonable(WSOpcodes.PLAYER_FAILED_LOGIN_NO_USER));
-            cir.setReturnValue(Text.literal("Your username is not whitelisted!" +
-                    " Use /help on discord and follow the instructions provided!"));
+            cir.setReturnValue(Text.literal("Your username is not whitelisted!\n" +
+                    "If you think this is a mistake, try a second time. Otherwise, contact an administrator to authenticate you."));
             cir.cancel();
         }
 
