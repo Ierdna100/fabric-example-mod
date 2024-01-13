@@ -1,16 +1,11 @@
-package college.andrei.bot;
+package college.andrei.websocket;
 
 import college.andrei.CollegeMod;
-import college.andrei.mixinHelpers.AllowedMember;
-import college.andrei.mixinHelpers.LoginHelper;
-import college.andrei.websocket.AllowedMembersResponse;
-import college.andrei.websocket.GlobalData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.websocket.*;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * <a href="https://medium.com/swlh/how-to-build-a-websocket-applications-using-java-486b3e394139">

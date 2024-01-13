@@ -1,19 +1,13 @@
 package college.andrei.mixin;
 
-import college.andrei.bot.CustomWebSocket;
+import college.andrei.websocket.CustomWebSocket;
 import college.andrei.mixinHelpers.dto.Deaths;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.net.http.WebSocket;
-import java.util.ArrayList;
-import java.util.List;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class DeathMessageMixin {
@@ -26,6 +20,7 @@ public abstract class DeathMessageMixin {
 
         String paramKilled = killed.getUuidAsString();
         String msg = killed.getDamageTracker().getDeathMessage().getString();
+        // get proper death message
 
         if (killer == null) {
             CustomWebSocket.sendData(new Deaths.Death(paramKilled, msg).toJsonable());
@@ -33,6 +28,7 @@ public abstract class DeathMessageMixin {
         }
 
         String paramKiller = killer.getUuidAsString();
+        // Add killer type
         boolean isByPlayer = killer.isPlayer();
 
         CustomWebSocket.sendData(new Deaths.DeathByEntity(paramKiller, paramKilled, isByPlayer, msg).toJsonable());

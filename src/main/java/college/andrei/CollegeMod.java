@@ -1,21 +1,18 @@
 package college.andrei;
 
-import college.andrei.bot.CustomWebSocket;
+import college.andrei.commands.RestartWebSocketClient;
+import college.andrei.websocket.CustomWebSocket;
 import college.andrei.eventHandlers.ServerStoppingHandler;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import college.andrei.eventHandlers.ServerStartedHandler;
 import college.andrei.eventHandlers.ChatMessageHandler;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.text.Text;
 import org.glassfish.tyrus.client.ClientManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static net.minecraft.server.command.CommandManager.*;
 
 import java.net.URI;
 
@@ -33,6 +30,8 @@ public class CollegeMod implements DedicatedServerModInitializer {
 		ServerMessageEvents.CHAT_MESSAGE.register(ChatMessageHandler::onChatMessage);
 		ServerLifecycleEvents.SERVER_STOPPING.register(ServerStoppingHandler::onServerStopping);
 		ServerLifecycleEvents.SERVER_STOPPED.register(ServerStoppingHandler::onServerStop);
+
+		new RestartWebSocketClient();
 	}
 
 	public static void createWebsocket() {

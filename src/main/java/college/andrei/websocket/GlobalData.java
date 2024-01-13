@@ -1,9 +1,6 @@
 package college.andrei.websocket;
 
 import college.andrei.CollegeMod;
-import college.andrei.bot.CustomWebSocket;
-import college.andrei.bot.WSOpcodes;
-import college.andrei.bot.WebSocketData;
 
 public class GlobalData {
     public static void handle() {
@@ -17,7 +14,7 @@ public class GlobalData {
     }
 
     public static class AsJson {
-        public static final String ip = "winter2024.andreimc.net";
+        public final String ip = "winter2024.andreimc.net";
         public final String seed;
         public final int maxPlayers;
         public final int currentPlayers;

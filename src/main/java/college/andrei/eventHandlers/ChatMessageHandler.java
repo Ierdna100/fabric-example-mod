@@ -1,16 +1,11 @@
 package college.andrei.eventHandlers;
 
-import college.andrei.bot.CustomWebSocket;
-import college.andrei.bot.WSOpcodes;
-import college.andrei.bot.WebSocketData;
+import college.andrei.websocket.CustomWebSocket;
+import college.andrei.websocket.WSOpcodes;
+import college.andrei.websocket.WebSocketData;
 import net.minecraft.network.message.MessageType.Parameters;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.network.ServerPlayerEntity;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChatMessageHandler {
     public static void onChatMessage(SignedMessage message, ServerPlayerEntity sender, Parameters params) {

@@ -1,4 +1,4 @@
-package college.andrei.bot;
+package college.andrei.websocket;
 
 import college.andrei.CollegeMod;
 import org.apache.http.client.methods.HttpPost;

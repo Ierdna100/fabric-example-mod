@@ -1,13 +1,10 @@
 package college.andrei.eventHandlers;
 
 import college.andrei.CollegeMod;
-import college.andrei.bot.CustomWebSocket;
-import college.andrei.bot.WSOpcodes;
-import college.andrei.bot.WebSocketData;
+import college.andrei.websocket.CustomWebSocket;
+import college.andrei.websocket.WSOpcodes;
+import college.andrei.websocket.WebSocketData;
 import net.minecraft.server.MinecraftServer;
-import org.glassfish.tyrus.client.ClientManager;
-
-import java.net.URI;
 
 public class ServerStartedHandler {
     public static void onServerStarted(MinecraftServer server) {

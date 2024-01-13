@@ -1,6 +1,6 @@
 package college.andrei.mixin;
 
-import college.andrei.bot.CustomWebSocket;
+import college.andrei.websocket.CustomWebSocket;
 import college.andrei.mixinHelpers.dto.CustomAdvancement;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementEntry;

@@ -1,8 +1,8 @@
 package college.andrei.eventHandlers;
 
-import college.andrei.bot.CustomWebSocket;
-import college.andrei.bot.WSOpcodes;
-import college.andrei.bot.WebSocketData;
+import college.andrei.websocket.CustomWebSocket;
+import college.andrei.websocket.WSOpcodes;
+import college.andrei.websocket.WebSocketData;
 import net.minecraft.server.MinecraftServer;
 
 public class ServerStoppingHandler {

@@ -1,7 +1,7 @@
 package college.andrei.mixinHelpers.dto;
 
-import college.andrei.bot.WSOpcodes;
-import college.andrei.bot.WebSocketData;
+import college.andrei.websocket.WSOpcodes;
+import college.andrei.websocket.WebSocketData;
 
 public class CustomAdvancement {
     public static class Boolean {

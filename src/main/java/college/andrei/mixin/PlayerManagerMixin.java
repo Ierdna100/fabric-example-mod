@@ -1,8 +1,8 @@
 package college.andrei.mixin;
 
 import college.andrei.CollegeMod;
-import college.andrei.bot.CustomWebSocket;
-import college.andrei.bot.WSOpcodes;
+import college.andrei.websocket.CustomWebSocket;
+import college.andrei.websocket.WSOpcodes;
 import college.andrei.mixinHelpers.AllowedMember;
 import college.andrei.mixinHelpers.LoginHelper;
 import college.andrei.mixinHelpers.dto.PlayerConnectingData;
