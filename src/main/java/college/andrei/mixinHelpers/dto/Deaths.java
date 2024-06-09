@@ -4,35 +4,22 @@ import college.andrei.websocket.WSOpcodes;
 import college.andrei.websocket.WebSocketData;
 
 public class Deaths {
-    public static class Death {
-        public final String killed;
-        public final String msg;
-
-        public Death(String killed, String msg) {
-            this.killed = killed;
-            this.msg = msg;
-        }
-
+    public record Death(String key, String killed) {
         public WebSocketData<Death> toJsonable() {
             return new WebSocketData<>(WSOpcodes.DEATH.getOpcode(), this);
         }
     }
 
-    public static class DeathByEntity {
-        public final String killer;
-        public final String killed;
-        public final boolean isByPlayer;
-        public final String msg;
-
-        public DeathByEntity(String killer, String killed, boolean isByPlayer, String msg) {
-            this.killer = killer;
-            this.killed = killed;
-            this.isByPlayer = isByPlayer;
-            this.msg = msg;
-        }
-
+    public record DeathByEntity(String key, String killed, String killer, boolean killerIsPlayer, String killerType) {
         public WebSocketData<DeathByEntity> toJsonable() {
             return new WebSocketData<>(WSOpcodes.DEATH_BY_ENTITY.getOpcode(), this);
+        }
+    }
+
+    // Possible bug: Can killer *not* be a player?
+    public record DeathWithItem(String key, String killed, String killer, String itemType, String itemName) {
+        public WebSocketData<DeathWithItem> toJsonable() {
+            return new WebSocketData<>(WSOpcodes.DEATH_BY_ENTITY_WITH_ITEM.getOpcode(), this);
         }
     }
 }

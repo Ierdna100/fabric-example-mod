@@ -4,6 +4,7 @@ public enum WSOpcodes {
     MESSAGE(0),
     DEATH(1),
     DEATH_BY_ENTITY(2),
+    DEATH_BY_ENTITY_WITH_ITEM(17),
     SERVER_STARTED(3),
     SERVER_STOP_WARNING(4),
     SERVER_STOPPED(5),
